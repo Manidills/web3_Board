@@ -1,4 +1,5 @@
 from Aave.aave import aave_v3
+from Yearn.yearn import yearn
 import streamlit as st
 from streamlit_option_menu import option_menu
 
@@ -37,4 +38,4 @@ if option == 'Web3':
     if option_web3 == 'Aave':
         aave_v3()
     elif option_web3 == 'Yearn':
-        st.write("yet")
+        yearn()
