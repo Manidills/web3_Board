@@ -1,5 +1,6 @@
 from Aave.aave import aave_v3
 from Yearn.yearn import yearn
+from skale.skale import skl
 import streamlit as st
 from streamlit_option_menu import option_menu
 
@@ -31,7 +32,7 @@ if option == 'Web3':
     
     st.markdown('#')
     
-    option_web3 = st.selectbox('SELECT WEB3 PROTOCOL',('Aave','Yearn'))
+    option_web3 = st.selectbox('SELECT WEB3 PROTOCOL',('Aave','Yearn','Skale'))
     st.markdown("#")
 
    
@@ -39,3 +40,5 @@ if option == 'Web3':
         aave_v3()
     elif option_web3 == 'Yearn':
         yearn()
+    elif option_web3 == 'Skale':
+        skl()
