@@ -11,7 +11,7 @@ def aave_v3():
     
     options_polygon = st.radio(
     'Explorer',
-    ('Polygon', 'Optimisim','Transactions_Explorer','Repay_Deposit_Borrow_Explorer'),horizontal=True)
+    ('Repay_Deposit_Borrow_Explorer','Transactions_Explorer','Polygon', 'Optimisim',),horizontal=True)
 
     st.markdown("#")
     st.title("Aave v3 Explorer")
