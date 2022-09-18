@@ -1,4 +1,5 @@
 import requests
+from common.csv import download_csv
 import plost
 import datetime
 import pandas as pd
@@ -58,51 +59,10 @@ def skl():
 
                 submit = st.form_submit_button("Submit")
 
-                if submit:
-                    payload = {
-                        "query": """{ 
-                        validators(first:  %s , orderBy: claimedFee, orderDirection: desc, skip: 10) {
-                                acceptNewRequests
-                                address
-                                claimedFee
-                                currentDelegationAmount
-                                currentDelegationCount
-                                description
-                                feeRate
-                                id
-                                isEnabled
-                                minimumDelegationAmount
-                                name
-                                registrationTime
-                            } }""" % (val),
-                    }
-                    res = requests.post(url='https://api.thegraph.com/subgraphs/name/ministry-of-decentralization/skale-manager-subgraph',
-                                        json=payload).json()
-                    list_of_values = res['data']['validators']
-                    it = iter(list_of_values)
-
-                    col1, col2 = st.columns((2,2))
-
-                    for i in it:
-                        with col1:
-                            st.write(i)
-                        with col2:
-                            try:
-                                st.write(next(it))
-                            except:
-                                pass
-        elif skl_manage == 'Validator':
-             with st.form("form1", clear_on_submit=False): 
-                
-                val = st.text_input("Enter ID")
-
-
-                submit = st.form_submit_button("Submit")
-
-                if submit:
-                    payload = {
-                        "query": """{ 
-                            validator(id: %s) {
+            if submit:
+                payload = {
+                    "query": """{ 
+                    validators(first:  %s , orderBy: claimedFee, orderDirection: desc, skip: 10) {
                             acceptNewRequests
                             address
                             claimedFee
@@ -110,21 +70,64 @@ def skl():
                             currentDelegationCount
                             description
                             feeRate
+                            id
                             isEnabled
                             minimumDelegationAmount
                             name
                             registrationTime
-                            requestedAddress
-                            id
-                        }
-                       }""" % (val),
+                        } }""" % (val),
+                }
+                res = requests.post(url='https://api.thegraph.com/subgraphs/name/ministry-of-decentralization/skale-manager-subgraph',
+                                    json=payload).json()
+                list_of_values = res['data']['validators']
+                it = iter(list_of_values)
+
+                col1, col2 = st.columns((2,2))
+
+                for i in it:
+                    with col1:
+                        st.write(i)
+                    with col2:
+                        try:
+                            st.write(next(it))
+                        except:
+                            pass
+                download_csv(res['data']['validators'])
+        elif skl_manage == 'Validator':
+            with st.form("form1", clear_on_submit=False): 
+                
+                val = st.text_input("Enter ID")
+
+
+                submit = st.form_submit_button("Submit")
+
+            if submit:
+                payload = {
+                    "query": """{ 
+                        validator(id: %s) {
+                        acceptNewRequests
+                        address
+                        claimedFee
+                        currentDelegationAmount
+                        currentDelegationCount
+                        description
+                        feeRate
+                        isEnabled
+                        minimumDelegationAmount
+                        name
+                        registrationTime
+                        requestedAddress
+                        id
                     }
-                    res = requests.post(url='https://api.thegraph.com/subgraphs/name/ministry-of-decentralization/skale-manager-subgraph',
-                                        json=payload).json()
-                    st.write(res)
+                    }""" % (val),
+                }
+                res = requests.post(url='https://api.thegraph.com/subgraphs/name/ministry-of-decentralization/skale-manager-subgraph',
+                                    json=payload).json()
+                st.write(res)
+                download_csv(res)
 
         elif skl_manage == 'Top_Delegators(claimedBounty)':
-             with st.form("form", clear_on_submit=False): 
+            with st.form("form", clear_on_submit=False): 
                 col1, col2 = st.columns((2,2))
                 with col1:
                     val = st.radio(
@@ -133,33 +136,34 @@ def skl():
 
                 submit = st.form_submit_button("Submit")
 
-                if submit:
-                    payload = {
-                        "query": """{ 
-                            delegators(first: %s, orderBy: claimedBounty, orderDirection: desc) {
-                                claimedBounty
-                                currentAmount
-                                currentCount
-                                id
-                            }
+            if submit:
+                payload = {
+                    "query": """{ 
+                        delegators(first: %s, orderBy: claimedBounty, orderDirection: desc) {
+                            claimedBounty
+                            currentAmount
+                            currentCount
+                            id
+                        }
 
-                         }""" % (val),
-                    }
-                    res = requests.post(url='https://api.thegraph.com/subgraphs/name/ministry-of-decentralization/skale-manager-subgraph',
-                                        json=payload).json()
-                    list_of_values = res['data']['delegators']
-                    it = iter(list_of_values)
+                        }""" % (val),
+                }
+                res = requests.post(url='https://api.thegraph.com/subgraphs/name/ministry-of-decentralization/skale-manager-subgraph',
+                                    json=payload).json()
+                list_of_values = res['data']['delegators']
+                it = iter(list_of_values)
 
-                    col1, col2 = st.columns((2,2))
+                col1, col2 = st.columns((2,2))
 
-                    for i in it:
-                        with col1:
-                            st.write(i)
-                        with col2:
-                            try:
-                                st.write(next(it))
-                            except:
-                                pass
+                for i in it:
+                    with col1:
+                        st.write(i)
+                    with col2:
+                        try:
+                            st.write(next(it))
+                        except:
+                            pass
+                download_csv(res['data']['delegators'])
         elif skl_manage == 'Delegator':
             with st.form("form1", clear_on_submit=False): 
                 
@@ -168,23 +172,25 @@ def skl():
 
                 submit = st.form_submit_button("Submit")
 
-                if submit:
-                    payload = {
-                        "query": """{ 
-                            delegator(id: \"%s\") {
-                            claimedBounty
-                            currentAmount
-                            currentCount
-                            id
-                        }
-                       }""" % (val),
+            if submit:
+                payload = {
+                    "query": """{ 
+                        delegator(id: \"%s\") {
+                        claimedBounty
+                        currentAmount
+                        currentCount
+                        id
                     }
-                    res = requests.post(url='https://api.thegraph.com/subgraphs/name/ministry-of-decentralization/skale-manager-subgraph',
-                                        json=payload).json()
-                    st.write(res)
+                    }""" % (val),
+                }
+                res = requests.post(url='https://api.thegraph.com/subgraphs/name/ministry-of-decentralization/skale-manager-subgraph',
+                                    json=payload).json()
+                st.write(res)
+                download_csv(res)
+                    
         
         elif skl_manage == 'Top_Delegations(amount)':
-             with st.form("form", clear_on_submit=False): 
+            with st.form("form", clear_on_submit=False): 
                 col1, col2 = st.columns((2,2))
                 with col1:
                     val = st.radio(
@@ -193,37 +199,38 @@ def skl():
 
                 submit = st.form_submit_button("Submit")
 
-                if submit:
-                    payload = {
-                        "query": """{ 
-                             delegations(first: %s, orderDirection: desc, orderBy: amount) {
-                                amount
-                                created
-                                delegationPeriod
-                                finished
-                                id
-                                info
-                                started
-                                state
-                            }
+            if submit:
+                payload = {
+                    "query": """{ 
+                            delegations(first: %s, orderDirection: desc, orderBy: amount) {
+                            amount
+                            created
+                            delegationPeriod
+                            finished
+                            id
+                            info
+                            started
+                            state
+                        }
 
-                         }""" % (val),
-                    }
-                    res = requests.post(url='https://api.thegraph.com/subgraphs/name/ministry-of-decentralization/skale-manager-subgraph',
-                                        json=payload).json()
-                    list_of_values = res['data']['delegations']
-                    it = iter(list_of_values)
+                        }""" % (val),
+                }
+                res = requests.post(url='https://api.thegraph.com/subgraphs/name/ministry-of-decentralization/skale-manager-subgraph',
+                                    json=payload).json()
+                list_of_values = res['data']['delegations']
+                it = iter(list_of_values)
 
-                    col1, col2 = st.columns((2,2))
+                col1, col2 = st.columns((2,2))
 
-                    for i in it:
-                        with col1:
-                            st.write(i)
-                        with col2:
-                            try:
-                                st.write(next(it))
-                            except:
-                                pass
+                for i in it:
+                    with col1:
+                        st.write(i)
+                    with col2:
+                        try:
+                            st.write(next(it))
+                        except:
+                            pass
+                download_csv(res['data']['delegations'])
         
         
         elif skl_manage == 'Delegation':
@@ -234,30 +241,32 @@ def skl():
 
                 submit = st.form_submit_button("Submit")
 
-                if submit:
-                    payload = {
-                        "query": """{ 
-                            delegation(id: %s) {
-                            amount
-                            created
-                            delegationPeriod
-                            finished
-                            id
-                            info
-                            started
-                            state
-                            holder {
-                            claimedBounty
-                            currentAmount
-                            currentCount
-                            }
-                            delegatedBlock {
-                            id
-                            timestamp
-                            }
+            if submit:
+                payload = {
+                    "query": """{ 
+                        delegation(id: %s) {
+                        amount
+                        created
+                        delegationPeriod
+                        finished
+                        id
+                        info
+                        started
+                        state
+                        holder {
+                        claimedBounty
+                        currentAmount
+                        currentCount
                         }
-                       }""" % (val),
+                        delegatedBlock {
+                        id
+                        timestamp
+                        }
                     }
-                    res = requests.post(url='https://api.thegraph.com/subgraphs/name/ministry-of-decentralization/skale-manager-subgraph',
-                                        json=payload).json()
-                    st.write(res)                
+                    }""" % (val),
+                }
+                res = requests.post(url='https://api.thegraph.com/subgraphs/name/ministry-of-decentralization/skale-manager-subgraph',
+                                    json=payload).json()
+                st.write(res) 
+                download_csv(res)  
+                                 

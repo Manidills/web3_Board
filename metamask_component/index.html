@@ -1,0 +1,163 @@
+<html>
+  <style>
+.btn-group button {
+  background-color: #04AA6D; /* Green background */
+  border: 1px solid green; /* Green border */
+  color: black; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  width: 80%; /* Set a width if needed */
+  /*display: block; /* Make the buttons appear below each other */
+}
+
+.btn-group button:not(:last-child) {
+  border-bottom: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: #3e8e41;
+}
+</style>
+
+
+  <body>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <div class="w3-bar">
+    <button
+        class="w3-button w3-left w3-light-grey"
+        id="connectButton"
+        disabled>
+        Connect
+    </button>
+    <button
+        class="w3-button w3-right w3-green"
+        id="getAccountsPortfolio" style="float: right;">
+        Upload Data
+    </button>
+    </div>
+    <script>
+      // ----------------------------------------------------
+      // Just copy/paste these functions as-is:
+
+        function sendMessageToStreamlitClient(type, data) {
+        var outData = Object.assign({
+            isStreamlitMessage: true,
+            type: type,
+        }, data);
+        window.parent.postMessage(outData, "*");
+        }
+
+        function init() {
+        sendMessageToStreamlitClient("streamlit:componentReady", {apiVersion: 1});
+        }
+
+        function setFrameHeight(height) {
+        sendMessageToStreamlitClient("streamlit:setFrameHeight", {height: height});
+        }
+
+        // The `data` argument can be any JSON-serializable value.
+        function sendDataToPython(data) {
+        sendMessageToStreamlitClient("streamlit:setComponentValue", data);
+        }
+
+      // ----------------------------------------------------
+      // Now modify this part of the code to fit your needs:
+        /*
+        The `piggybankContract` is compiled from:
+
+        pragma solidity ^0.4.0;
+        contract PiggyBank {
+
+            address public owner;
+
+            function PiggyBank() public {
+                owner = msg.sender;
+            }
+        }
+        */
+
+        const initialize = () => {
+        //Basic Actions Section
+        const onboardButton = document.getElementById('connectButton');
+        const getAccountsButton = document.getElementById('getAccountsPortfolio');
+        const getAccountsResult = document.getElementById('getAccountsResult');
+
+        //Created check function to see if the MetaMask extension is installed
+        const isMetaMaskInstalled = () => {
+            //Have to check the ethereum binding on the window object to see if it's installed
+            const { ethereum } = window;
+            return Boolean(ethereum && ethereum.isMetaMask);
+        };
+
+        const onClickConnect = async () => {
+            try {
+            // Will open the MetaMask UI
+            // You should disable this button while the request is pending!
+            await ethereum.request({ method: 'eth_requestAccounts' });
+            } catch (error) {
+            console.error(error);
+            }
+        };
+
+        const MetaMaskClientCheck = () => {
+            //Now we check to see if Metmask is installed
+            if (!isMetaMaskInstalled()) {
+                console.log("MetaMask is not installed");
+            } else {
+                //If MetaMask is installed we ask the user to connect to their wallet
+                onboardButton.innerText = 'Connect';
+                //When the button is clicked we call this function to connect the users MetaMask Wallet
+                onboardButton.onclick = onClickConnect;
+                //The button is now disabled
+                onboardButton.disabled = false;
+            }
+            
+        };
+
+        //Eth_Accounts-getAccountsButton
+        getAccountsButton.addEventListener('click', async () => {
+            //we use eth_accounts because it returns a list of addresses owned by us.
+            const accounts = await ethereum.request({ method: 'eth_accounts' });
+            //We take the first address in the array of addresses and display it
+            // getAccountsResult.innerHTML = accounts[0] || 'Not able to get accounts';
+            sendDataToPython({
+                value: accounts[0],
+                dataType: "json",
+            });
+        });
+
+        MetaMaskClientCheck();
+        };
+
+        window.addEventListener('DOMContentLoaded', initialize);
+
+        var getAccountsResult = document.getElementById("getAccountsResult");
+
+        // data is any JSON-serializable value you sent from Python,
+        // and it's already deserialized for you.
+        function onDataFromPython(event) {
+        if (event.data.type !== "streamlit:render") return;
+        // getAccountsResult.value = event.data.args.account_results;  // Access values sent from Python here!
+        }
+
+        // Hook things up!
+        window.addEventListener("message", onDataFromPython);
+        init();
+
+        // Hack to autoset the iframe height.
+        window.addEventListener("load", function() {
+        window.setTimeout(function() {
+            setFrameHeight(document.documentElement.clientHeight)
+        }, 0);
+        });
+
+        // Optionally, if the automatic height computation fails you, give this component a height manually
+        // by commenting out below:
+        //setFrameHeight(200);
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

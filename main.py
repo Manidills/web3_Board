@@ -1,9 +1,14 @@
 from Aave.aave import aave_v3
+from Aurora.aurora import aurora_graph
 from Ens.ens import ens
+from Superfluid.superfluid import super_graph
 from Yearn.yearn import yearn
+from nft.nft import token_extract
 from skale.skale import skl
+from storage.storage import storage
 import streamlit as st
 from streamlit_option_menu import option_menu
+from wallet.wallet import wallet
 
 
 st.set_page_config(
@@ -33,7 +38,7 @@ if option == 'Web3':
     
     st.markdown('#')
     
-    option_web3 = st.selectbox('SELECT WEB3 PROTOCOL',('Aave','Yearn','Skale','Ens'))
+    option_web3 = st.selectbox('SELECT WEB3 PROTOCOL',('Aave','Yearn','Skale','Ens', 'Aurora', 'Superfluid'))
     st.markdown("#")
 
    
@@ -45,3 +50,16 @@ if option == 'Web3':
         skl()
     elif option_web3 == 'Ens':
         ens()
+    elif option_web3 == 'Aurora':
+        aurora_graph()
+    elif option_web3 == 'Superfluid':
+        super_graph()
+
+elif option == 'NFT_Token':
+    token_extract()
+
+elif option == 'Wallet':
+    wallet()
+
+elif option == 'Storage':
+    storage()

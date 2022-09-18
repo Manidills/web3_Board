@@ -1,3 +1,4 @@
+from common.csv import download_csv
 import streamlit as st
 import requests
 
@@ -16,7 +17,7 @@ def iterate_val(value):
                 pass
 
 def multiple_value(query, key_val):
-     with st.form("form1", clear_on_submit=False): 
+    with st.form("form1", clear_on_submit=False): 
                 col1, col2 = st.columns((2,2))
                 with col1:
                         val = st.radio(
@@ -26,14 +27,15 @@ def multiple_value(query, key_val):
 
                 submit = st.form_submit_button("Submit")
 
-                if submit:
-                    payload = {
-                       "query": query % (val),
-                    }
-                    res = requests.post(url='https://api.thegraph.com/subgraphs/name/messari/ens-governance',
-                                        json=payload).json()
-                    list_of_values = res['data'][key_val]
-                    iterate_val(list_of_values)
+    if submit:
+        payload = {
+            "query": query % (val),
+        }
+        res = requests.post(url='https://api.thegraph.com/subgraphs/name/messari/ens-governance',
+                            json=payload).json()
+        list_of_values = res['data'][key_val]
+        iterate_val(list_of_values)
+        download_csv(res['data'][key_val])
 
 def single_value(query):
     with st.form("form1", clear_on_submit=False): 
@@ -43,13 +45,14 @@ def single_value(query):
 
                 submit = st.form_submit_button("Submit")
 
-                if submit:
-                    payload = {
-                        "query": query % (str(val)),
-                    }
-                    res = requests.post(url='https://api.thegraph.com/subgraphs/name/messari/ens-governance',
-                                        json=payload).json()
-                    st.write(res)
+    if submit:
+        payload = {
+            "query": query % (str(val)),
+        }
+        res = requests.post(url='https://api.thegraph.com/subgraphs/name/messari/ens-governance',
+                            json=payload).json()
+        st.write(res)
+        download_csv(res)
 
 def ens_graph():
         ens_manage = st.radio(
