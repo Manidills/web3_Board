@@ -51,9 +51,8 @@ def storage():
     if op_store == "Upload":
        
         if value:
-            st.write(value)
 
-            st.subheader("Upload FLOWMAP IMAGE ")
+            #st.subheader("Upload FLOWMAP IMAGE ")
             with st.form("form2", clear_on_submit=False): 
                 image_file = st.file_uploader("Upload Images", type=["png","jpg","jpeg"])
                 name = st.text_input("Enter file name")
@@ -67,9 +66,9 @@ def storage():
                 connection_obj = sqlite3.connect('ipfs.db')
                 cursor_obj = connection_obj.cursor()
                 cursor_obj.execute("INSERT INTO ipfs values(?, ?, ?)", (str(api['ipfs_url']), str(value), str(name)))
-                data=cursor_obj.execute('''SELECT * FROM ipfs''')
-                for row in data:
-                    print(row)
+                # data=cursor_obj.execute('''SELECT * FROM ipfs''')
+                # for row in data:
+                #     print(row)
 
                 # Commit your changes in the database    
                 connection_obj.commit()
