@@ -1,8 +1,8 @@
 import imp
 from Aave.aave_optimisim import aave_opti
 from Aave.aave_polygon import aave_poly
-from Aave.aave_repay.aave_trans_explore.app import trans_explore
-from Aave.aave_trans.trans import trans
+from Aave.app import trans_explore
+from Aave.trans import trans
 import streamlit as st
 from PIL import Image
 
@@ -15,7 +15,7 @@ def aave_v3():
 
     st.markdown("#")
     st.title("Aave v3 Explorer")
-    st.image(Image.open("Aave/aave_repay/aave_trans_explore/aave.png"))
+    st.image(Image.open("Aave/aave.png"))
     
     if options_polygon == 'Polygon':
         aave_poly()
