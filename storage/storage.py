@@ -1,6 +1,5 @@
 import sqlite3 
 from tempfile import NamedTemporaryFile
-import ipfsApi
 import requests
 import streamlit as st
 from metamask_component import metamask_component
