@@ -6,7 +6,7 @@ pandas==1.4.0
 Pillow==9.2.0
 pinatapy_vourhey==0.1.6
 Plost==0.2.5
-prettymapp==0.0.1
+git+https://github.com/chrieke/prettymapp.git
 pytz==2019.3
 requests==2.22.0
 shroomdk==1.0.1
