@@ -7,7 +7,7 @@ Pillow==9.2.0
 pinatapy_vourhey==0.1.6
 Plost==0.2.5
 git+https://github.com/chrieke/prettymapp.git
-requests==2.22.0
+requests
 shroomdk==1.0.1
 streamlit==1.12.2
 streamlit_option_menu==0.3.2
