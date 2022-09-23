@@ -103,6 +103,7 @@ def wallet():
                 )
             else:
                 st.info("Wallet seems Fishy")
+        
     elif op_wallet == "Mint":
         mint_data()
     
