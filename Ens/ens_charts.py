@@ -27,6 +27,10 @@ def ens_charts():
     st.markdown("#")
     
     if options_skale == 'ENS_Analysis':
+        col1, col2, col3 = st.columns((3,3,3))
+        col1.metric("otal ENS names created", 2494903)
+        col2.metric("All ENS participating addresses", 564913)
+        col3.metric("Primary names registered", 402107)
 
         line_chart(data, 'ens_growth', 'day', 'eth_growth', '.ETH_Total_Growth')
         line_chart(data, 'ens_growth', 'day', 'new_eth_users', '.ETH_New_Users_Growth')

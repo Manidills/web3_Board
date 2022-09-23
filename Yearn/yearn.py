@@ -18,6 +18,16 @@ def yearn():
     st.title("Yearn Vaults")
 
     st.markdown("#")
+
+    st.markdown("#")
+    col1, col2, col3 = st.columns((3,3,3))
+    col1.metric("Active users - 24 Hours ", 117)
+    col2.metric("Active users - 7 Days", 487)
+    col3.metric("Active users - 30 Days", 1337)
+
+    col1.metric("Total Transactions - 24 Hours", 145)
+    col2.metric("Total Transactions - 7 Days", 1007)
+    col3.metric("Total Transactions - 30 Days", 3654)
     st.subheader("Trending_Vaults_2022")
     st.dataframe(table(data, 'Trending_Vaults_2022'))
 

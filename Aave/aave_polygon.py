@@ -18,6 +18,14 @@ def aave_poly():
     st.title("Aave_v3 Polygon")
 
     st.markdown("#")
+    col1, col2, col3 = st.columns((3,3,3))
+    col1.metric("Today's Deposits volume", 2616395.98)
+    col2.metric("Today's Depositors", 437)
+    col3.metric("Today's Deposits", 1226)
+
+    col1.metric("Today's Borrows volume", 5917159.79)
+    col2.metric("Today's Borrows", 176)
+    col3.metric("Today's Borrowers", 75)
 
     line_chart(data, 'AAVE_V3_Polygon_Daily_New_User', 'min_dt', 'count', 'AAVE_V3_Polygon_Daily_New_User')
 

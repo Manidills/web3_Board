@@ -24,6 +24,14 @@ def skl():
     st.markdown("#")
     
     if options_skale == 'SKL':
+        col1, col2, col3 = st.columns((3,3,3))
+        col1.metric("Waallets > 0", 19973)
+        col2.metric("Wallets with >1,000", 8401)
+        col3.metric("Wallets with >10,000", 3826)
+
+        col1.metric("Wallets with >100,000", 643)
+        col2.metric("Wallets with >1,000,000", 293)
+        
 
         line_chart(data, 'skl_price', 'date', 'price', 'SKL_Price')
         line_chart(data, 'skl_users', 'date', 'total_users', 'SKL_users')

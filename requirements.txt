@@ -13,3 +13,4 @@ streamlit_option_menu==0.3.2
 tabulate==0.8.10
 web3==5.30.0
 eth
+mythril

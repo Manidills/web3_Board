@@ -19,6 +19,15 @@ def aave_opti():
 
     st.markdown("#")
 
+    col1, col2, col3 = st.columns((3,3,3))
+    col1.metric("Today's Deposits volume", 7815276.21)
+    col2.metric("Today's Depositors", 314)
+    col3.metric("Today's Deposits", 1937)
+
+    col1.metric("Today's Borrows volume", 5014518.23)
+    col2.metric("Today's Borrows", 494)
+    col3.metric("Today's Borrowers", 586)
+
     #line_chart(data, 'AAVE_V3_Polygon_Daily_New_User', 'min_dt', 'count', 'AAVE_V3_Polygon_Daily_New_User')
     line_chart_multi(data,'AAVE_V3_Optimism_Users_activity', 'dt', 'activer_users','account', 'AAVE_V3_Optimism_Users_activity')
 

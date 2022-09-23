@@ -31,7 +31,7 @@ with col3:
 
 
 st.markdown("#")
-option = option_menu("Web3 Board", ['Web3','NFT_Token', 'Wallet','Storage'], 
+option = option_menu("Web3 Board", ['Web3','NFT_Token', 'Wallet','Scan','Storage'], 
     icons=['house'], menu_icon="cast", default_index=0, orientation="horizontal")
 
 if option == 'Web3':
@@ -63,3 +63,15 @@ elif option == 'Wallet':
 
 elif option == 'Storage':
     storage()
+
+elif option == 'Scan':
+    import subprocess
+
+    st.title("Contract's BUG SCANNER")
+
+    inp = st.text_input("Enter Contract Address")
+    #address = "0x5c436ff914c458983414019195e0f4ecbef9e6dd"
+    test = subprocess.Popen(["myth","analyze","-a",inp,"--infura-id", "5bf383ed6b0345d4b1dde6e622e0e5dc", "-t", "1"], stdout=subprocess.PIPE).stdout.read()
+    #output = test.communicate()[0]
+    st.text(test.decode())
+    st.download_button("Download", test.decode())

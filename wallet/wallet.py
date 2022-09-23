@@ -18,7 +18,7 @@ def wallet():
 
     op_wallet = st.radio(
     'Wallet Explorer',
-    ('NFTS','Tokens','Hash', 'Check_&_Generate_art', 'Mint', 'Scan'),horizontal=True)
+    ('NFTS','Tokens','Hash', 'Check_&_Generate_art', 'Mint'),horizontal=True)
 
     if op_wallet == "NFTS":
         with st.form("form2", clear_on_submit=False): 
@@ -105,14 +105,7 @@ def wallet():
                 st.info("Wallet seems Fishy")
     elif op_wallet == "Mint":
         mint_data()
-    elif op_wallet == 'Scan':
-        import subprocess
-
-        inp = st.text_input("Enter Contract Address")
-        #address = "0x5c436ff914c458983414019195e0f4ecbef9e6dd"
-        test = subprocess.Popen(["myth","analyze","-a",inp,"--infura-id", "5bf383ed6b0345d4b1dde6e622e0e5dc", "-t", "1"], stdout=subprocess.PIPE).stdout.read()
-        #output = test.communicate()[0]
-        st.text(test.decode())
+    
 
 
         
