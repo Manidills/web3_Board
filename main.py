@@ -22,13 +22,10 @@ with col1:
     st.write(' ')
 
 with col2:
-    new_title = '<p style="font-family: Tangerine; text-align: center; color:white; font-size: 70px;">Web3 Board</p>'
-    st.markdown(new_title, unsafe_allow_html=True)
-    
+    st.image("https://i.postimg.cc/DZDdBJdb/text-2.gif", width=450)
 
 with col3:
     st.write(' ')
-
 
 st.markdown("#")
 option = option_menu("Web3 Board", ['Web3','NFT_Token', 'Wallet','Scan','Storage'], 
