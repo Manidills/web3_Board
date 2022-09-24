@@ -64,13 +64,17 @@ def skl():
                     val = st.radio(
                     'Limit',
                     (10,20,100))
+                with col2:
+                    order_ = st.selectbox(
+                    'Order_by',
+                    ('claimedFee', 'feeRate', 'id'))
 
                 submit = st.form_submit_button("Submit")
 
             if submit:
                 payload = {
                     "query": """{ 
-                    validators(first:  %s , orderBy: claimedFee, orderDirection: desc, skip: 10) {
+                    validators(first:  %s , orderBy: %s, orderDirection: desc, skip: 10) {
                             acceptNewRequests
                             address
                             claimedFee
@@ -83,7 +87,7 @@ def skl():
                             minimumDelegationAmount
                             name
                             registrationTime
-                        } }""" % (val),
+                        } }""" % (val, order_),
                 }
                 res = requests.post(url='https://api.thegraph.com/subgraphs/name/ministry-of-decentralization/skale-manager-subgraph',
                                     json=payload).json()
@@ -141,20 +145,24 @@ def skl():
                     val = st.radio(
                     'Limit',
                     (10,20,100))
+                with col2:
+                    order_ = st.selectbox(
+                    'Order_by',
+                    ('claimedBounty', 'currentAmount', 'id'))
 
                 submit = st.form_submit_button("Submit")
 
             if submit:
                 payload = {
                     "query": """{ 
-                        delegators(first: %s, orderBy: claimedBounty, orderDirection: desc) {
+                        delegators(first: %s, orderBy: %s, orderDirection: desc) {
                             claimedBounty
                             currentAmount
                             currentCount
                             id
                         }
 
-                        }""" % (val),
+                        }""" % (val, order_),
                 }
                 res = requests.post(url='https://api.thegraph.com/subgraphs/name/ministry-of-decentralization/skale-manager-subgraph',
                                     json=payload).json()
@@ -204,13 +212,18 @@ def skl():
                     val = st.radio(
                     'Limit',
                     (10,20,100))
+                with col2:
+                    order_ = st.selectbox(
+                    'Order_by',
+                    ('amount', 'delegationPeriod', 'id'))
+                
 
                 submit = st.form_submit_button("Submit")
 
             if submit:
                 payload = {
                     "query": """{ 
-                            delegations(first: %s, orderDirection: desc, orderBy: amount) {
+                            delegations(first: %s, orderDirection: desc, orderBy: %s) {
                             amount
                             created
                             delegationPeriod
@@ -221,7 +234,7 @@ def skl():
                             state
                         }
 
-                        }""" % (val),
+                        }""" % (val,order_),
                 }
                 res = requests.post(url='https://api.thegraph.com/subgraphs/name/ministry-of-decentralization/skale-manager-subgraph',
                                     json=payload).json()

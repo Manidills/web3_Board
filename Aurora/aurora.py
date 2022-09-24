@@ -51,17 +51,38 @@ def multiple_value_dex(query, key_val):
                     val = st.radio(
                     'Limit',
                     (10,20,100))
-                # with col2:
-                #     Sales_type = st.selectbox(
-                #     'Order By',
-                #     ('price', 'id'))
+                if key_val == 'mints':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ('amountUSD', 'id', 'amount0'))
+                elif key_val == 'swaps':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ('amountUSD', 'id', 'amount0In'))
+                elif key_val == 'pairDayDatas':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ('dailyVolumeUSD', 'id', 'totalSupply'))
+                elif key_val == 'pairs':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ('txCount', 'id', 'volumeUSD'))
+                elif key_val == 'capitalDexDayDatas':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ('dailyVolumeUSD', 'id', 'totalVolumeUSD'))
 
 
                 submit = st.form_submit_button("Submit")
 
     if submit:
         payload = {
-            "query": query % (val),
+            "query": query % (val, order_),
         }
         res = requests.post(url='https://api.thegraph.com/subgraphs/name/curioteam/capital-dex-aurora',
                             json=payload).json()
@@ -100,7 +121,7 @@ def aurora_graph():
             if auro_manage == 'Capital_Dex_Aurora_Swaps':
     
                         query = """{ 
-                            swaps(first: %s, orderBy: amountUSD, orderDirection: desc) {
+                            swaps(first: %s, orderBy: %s, orderDirection: desc) {
                             amount0In
                             amount0Out
                             amount1In
@@ -135,7 +156,7 @@ def aurora_graph():
                         
             elif auro_manage == 'Capital_DEX_Aurora_Mints':
                         query = """{
-                            mints(first: %s, orderBy: amountUSD, orderDirection: desc, subgraphError: allow) {
+                            mints(first: %s, orderBy: %s, orderDirection: desc, subgraphError: allow) {
                                 amount0
                                 amount1
                                 amountUSD
@@ -154,7 +175,7 @@ def aurora_graph():
                         query = """{
                             pairDayDatas(
                             first: %s
-                            orderBy: dailyVolumeUSD
+                            orderBy: %s
                             orderDirection: desc
                         ) {
                             dailyTxns
@@ -190,7 +211,7 @@ def aurora_graph():
                         single_value(query)
             elif auro_manage == 'Capital_Dex_Aurora_Pairs':
                         query = """{
-                            pairs(first: %s, orderBy: volumeUSD, orderDirection: desc) {
+                            pairs(first: %s, orderBy: %s, orderDirection: desc) {
                             createdAtBlockNumber
                             createdAtTimestamp
                             id
@@ -211,7 +232,7 @@ def aurora_graph():
                         multiple_value_dex(query, 'pairs')
             elif auro_manage == 'Capital_Dex_Aurora_Day_Datas':
                         query = """{
-                        capitalDexDayDatas(first: %s, orderBy: dailyVolumeUSD, orderDirection: desc) {
+                        capitalDexDayDatas(first: %s, orderBy: %s, orderDirection: desc) {
                             dailyVolumeETH
                             dailyVolumeUSD
                             dailyVolumeUntracked

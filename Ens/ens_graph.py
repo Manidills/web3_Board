@@ -23,13 +23,29 @@ def multiple_value(query, key_val):
                         val = st.radio(
                         'Limit',
                         (10,20,100))
+                if key_val == 'delegates':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ('numberVotes', 'id', 'delegatedVotes'))
+                elif key_val == 'tokenHolders':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ('tokenBalance', 'id', 'totalTokensHeld'))
+                elif key_val == 'governances':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ('totalTokenSupply', 'id', 'totalDelegates'))
+
 
 
                 submit = st.form_submit_button("Submit")
 
     if submit:
         payload = {
-            "query": query % (val),
+            "query": query % (val, order_),
         }
         res = requests.post(url='https://api.thegraph.com/subgraphs/name/messari/ens-governance',
                             json=payload).json()
@@ -63,7 +79,7 @@ def ens_graph():
 
            
                     query = """{ 
-                         delegates(first: %s, orderBy: delegatedVotes, orderDirection: desc) {
+                         delegates(first: %s, orderBy: %s, orderDirection: desc) {
                             delegatedVotes
                             delegatedVotesRaw
                             id
@@ -87,7 +103,7 @@ def ens_graph():
                     query = """{
                         tokenHolders(
                         first: %s
-                        orderBy: tokenBalance
+                        orderBy: %s
                         orderDirection: desc
                         skip: 10
                         subgraphError: allow
@@ -120,7 +136,7 @@ def ens_graph():
                     single_value(query)
         elif ens_manage == 'Governances':
                     query = """{
-                            governances(first: %s, orderBy: currentTokenHolders, orderDirection: desc) {
+                            governances(first: %s, orderBy: %s, orderDirection: desc) {
                             currentDelegates
                             currentTokenHolders
                             delegatedVotes

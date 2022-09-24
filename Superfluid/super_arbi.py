@@ -51,22 +51,56 @@ def multiple_value_dex(query, key_val):
                     val = st.radio(
                     'Limit',
                     (10,20,100))
-                # with col2:
-                #     Sales_type = st.selectbox(
-                #     'Order By',
-                #     ('price', 'id'))
+                if key_val == 'accounts':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ('createdAtTimestamp', 'id'))
+                elif key_val == 'flowUpdatedEvents':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ('deposit', 'id', 'flowRate'))
+                elif key_val == 'tokenStatistics':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ('totalDeposit', 'id', 'totalNumberOfActiveStreams'))
+                elif key_val == 'transferEvents':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ('value', 'id', 'gasPrice'))
+                elif key_val == 'streams':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ('deposit', 'id', 'createdAtTimestamp'))
+                elif key_val == 'mintedEvents':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ( 'id', 'amount'))
+                elif key_val == 'superTokenCreatedEvents':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ('id', 'gasPrice'))
 
 
                 submit = st.form_submit_button("Submit")
 
     if submit:
         payload = {
-            "query": query % (val),
+            "query": query % (val, order_),
         }
         res = requests.post(url='https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-arbitrum-one',
                             json=payload).json()
         list_of_values = res['data'][key_val]
-        iterate_val(list_of_values)
+        iterate_val(list_of_values)# with col2:
+                #     Sales_type = st.selectbox(
+                #     'Order By',
+                #     ('price', 'id'))
         download_csv(res['data'][key_val])
 
 
@@ -98,7 +132,7 @@ def superfluid_arbi():
         if xdai_manage == 'Accounts':
 
                     query = """{ 
-                        accounts(first: %s, orderBy: createdAtTimestamp, orderDirection: desc) {
+                        accounts(first: %s, orderBy: %s, orderDirection: desc) {
                             createdAtBlockNumber
                             createdAtTimestamp
                             id
@@ -112,7 +146,7 @@ def superfluid_arbi():
         elif xdai_manage == 'Top_flowUpdatedEvents':
 
                 query = """{ 
-                        flowUpdatedEvents(first: %s, orderBy: flowRate, orderDirection: desc) {
+                        flowUpdatedEvents(first: %s, orderBy: %s, orderDirection: desc) {
                             addresses
                             blockNumber
                             deposit
@@ -142,7 +176,7 @@ def superfluid_arbi():
                 query = """{ 
                         tokenStatistics(
                             first: %s
-                            orderBy: totalSupply
+                            orderBy: %s
                             orderDirection: desc
                         ) {
                             id
@@ -167,7 +201,7 @@ def superfluid_arbi():
         elif xdai_manage == 'TransferEvents':
 
                 query = """{ 
-                       transferEvents(first: %s, orderBy: id) {
+                       transferEvents(first: %s, orderBy: %s) {
                             addresses
                             blockNumber
                             gasPrice
@@ -192,7 +226,7 @@ def superfluid_arbi():
         elif xdai_manage == 'Streams':
 
                 query = """{ 
-                        streams(first: %s, orderBy: deposit, orderDirection: desc) {
+                        streams(first: %s, orderBy: %s, orderDirection: desc) {
                             createdAtBlockNumber
                             createdAtTimestamp
                             currentFlowRate
@@ -208,7 +242,7 @@ def superfluid_arbi():
         elif xdai_manage == 'MintedEvents':
 
                 query = """{ 
-                        mintedEvents(first: %s, orderBy: amount, orderDirection: desc, skip: 10) {
+                        mintedEvents(first: %s, orderBy: %s, orderDirection: desc, skip: 10) {
                         addresses
                         amount
                         blockNumber
@@ -231,7 +265,7 @@ def superfluid_arbi():
         elif xdai_manage == 'SuperTokenCreatedEvents':
 
                 query = """{ 
-                        superTokenCreatedEvents(first: %s, orderBy: gasPrice, orderDirection: desc, skip: 10) {
+                        superTokenCreatedEvents(first: %s, orderBy: %s, orderDirection: desc, skip: 10) {
                             addresses
                             blockNumber
                             gasPrice

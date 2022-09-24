@@ -22,13 +22,18 @@ def multiple_value(query, key_val):
                         val = st.radio(
                         'Limit',
                         (10,20,100))
+                if key_val == 'enss':
+                    with col2:
+                        order_ = st.selectbox(
+                        'Order_by',
+                        ('cost', 'expires', 'id'))
 
 
                 submit = st.form_submit_button("Submit")
 
                 if submit:
                     payload = {
-                       "query": query % (val),
+                       "query": query % (val,order_),
                     }
                     res = requests.post(url='https://api.thegraph.com/subgraphs/name/salmandabbakuti/ens-registry',
                                         json=payload).json()
@@ -60,7 +65,7 @@ def ens_domains():
 
            
                     query = """{ 
-                         enss(first: %s, orderBy: cost, orderDirection: desc) {
+                         enss(first: %s, orderBy: %s, orderDirection: desc) {
                             cost
                             expires
                             id
