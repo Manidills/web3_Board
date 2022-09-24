@@ -10,5 +10,7 @@
 * Lack of INTERACTIVE web3 protocols dashboards avilable publicaly. Dune started a major step on that but still users need sql stuffs to get the req data.
 * Finding the trending and rare NFT Tokens are difficult.
 * No simple userface to extract and download NFT related or wallet related historical and detailed data.
-* Lack of publically avilable place scan and get detailed bug reports for smart contracts. (INDEED)
+* Lack of publically avilable place to scan the codebase and get detailed bug reports for smart contracts. (INDEED)
 * Personalized IPFS upload's and URL link managements.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
