@@ -72,3 +72,6 @@ elif option == 'Scan':
     #output = test.communicate()[0]
     st.text(test.decode())
     st.download_button("Download", test.decode())
+
+
+   
