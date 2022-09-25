@@ -2,7 +2,7 @@
 <div align="center">
     <a href="https://postimg.cc/9z878ZTS"><img src="https://i.postimg.cc/Prv0NQ73/Web3.png" alt="Add-a-heading" border="0" width="200" height="200"></a>
   <h3 align="center">WEB3 Board</h3>
-  * Deployed URL : https://manidills-zora-api-dash-main-e9ct4f.streamlitapp.com/
+  * Deployed URL : https://manidills-web3-board-main-i75w8h.streamlitapp.com/
 </div>
 
 ## Problems
@@ -186,9 +186,14 @@ API.
     2. **Upload** - Upload the collection metadata or any file you wanna maintain. It uses **pinata** service to **upload the data**.
     3. **check** - once you click check TAB its **retrive** the all upload you made to **IPFS** in a table structure with the **IPFS URL link** of the each item with downlaod option.
     
-    **Core focus is to make it personalized way, just connect your wallet, check or upload your data's, if you wish to share any IPFS URL , you juts away with one step.**
+    **Core focus is to make it personalized way, just connect your wallet, check or upload your data's, if you wish to share any IPFS URL , you just away with one step.**
     
     
 ## Special Bonus
 
 **WEB3 Scanner** - Paste your contract address and get your BUG report. It analysis the whole code and notify any Major bug on your contract.
+<div align="center" display="flex">
+<a href="https://github.com/anomic30">
+<img src="https://i.postimg.cc/DyGFc3fL/bug.png" width="75%"/>
+</a>
+</div>
