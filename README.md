@@ -180,7 +180,7 @@ API.
 </a>
 </div>
 
-2. **Storage_Mangement** - Upload and maintain the IPFS data and URL of the File
+2. **Personalized IPFS Storage_Management** - Upload and maintain the IPFS data and URL of the File
 
     1. **Connect your web3 wallet (Metamask)** to WEB3 Board
     2. **Upload** - Upload the collection metadata or any file you wanna maintain. It uses **pinata** service to **upload the data**.
