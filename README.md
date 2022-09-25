@@ -139,7 +139,7 @@
     * w3.provider.make_request(**qn_verifyNFTsOwner**)
     * w3.provider.make_request(**qn_getWalletTokenBalance**)
     * w3.provider.make_request(**qn_getWalletTokenTransactions**)
-    * w3.eth.get_transaction(**hash
+    * w3.eth.get_transaction(**hash**)
     
 3. **COVALENT** - Wallet_Transactions, Portfolio, Token_Transactions, Hash_Transactions ,Topic_Hash APIs Integrated
 
